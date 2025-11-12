@@ -7,14 +7,17 @@ from logger import logger
 
 
 class QNetWrapper:
-    def __init__(self, 
-                 state_action_size, 
+    """Q-Network wrapper for training and prediction."""
+
+    def __init__(self,
+                 state_action_size,
                  net_args=dict(),
                  lr=.01,
                  max_grad=1,
                  ckpt_dir='ckpts/qnet',
                  model_name='q-net',
                  session_config=None):
+        """Initialize Q-Network with separate training and prediction networks."""
         graph = tf.Graph()
         with graph.as_default():
             with tf.variable_scope('pred_qnet'):

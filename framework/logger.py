@@ -4,6 +4,7 @@ logging.basicConfig()
 logger = logging.getLogger('pirltest')
 
 
+
 def init_logger(filepath, mode='a'):
     logger.setLevel(logging.DEBUG)
 

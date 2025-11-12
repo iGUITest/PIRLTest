@@ -70,6 +70,13 @@ class QNetWrapper:
                     sess.run(self.copy_var_ops)
             
     def train(self, dataset, num_epoch=1, save_every=1):
+        """Train the Q-network on the provided dataset.
+
+        Args:
+            dataset (iterable): A dataset iterator yielding state-action pairs and their corresponding expected values.
+            num_epoch (int): The number of epochs to train.
+            save_every (int): Frequency (in epochs) to save the model.
+        """
         qnet = self.train_qnet
         with self.sess.as_default():
             sess = self.sess
@@ -96,6 +103,15 @@ class QNetWrapper:
             sess.run(self.copy_var_ops)
     
     def predict(self, state_actions, batch_size=4):
+        """Predict the Q-values for a given batch of state-action pairs.
+
+        Args:
+            state_actions (np.array): Array of state-action pairs to predict values for.
+            batch_size (int): The batch size used for prediction.
+
+        Returns:
+            np.array: Predicted Q-values for the state-action pairs.
+        """
         values = []
         n_data = state_actions.shape[0]
         with self.sess.as_default():
@@ -109,6 +125,15 @@ class QNetWrapper:
         return values
   
 def copy_vars(from_scope, to_scope):
+    """Copy variables from one scope to another.
+
+    Args:
+        from_scope (str): The scope from which to copy variables.
+        to_scope (str): The scope to copy variables to.
+
+    Returns:
+        list: A list of operations to copy variables from the source scope to the target scope.
+    """
     var_dict = {}
     for var in tf.get_collection(tf.GraphKeys.VARIABLES, from_scope):
         var_name = var.name[len(from_scope):]

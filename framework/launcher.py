@@ -17,6 +17,9 @@ class BackendConfig:
         # -------- Q Net Configs ------------
         self.state_action_size = 17316
         # available args:
+        # - state_action_size: size of state-action space
+
+       # self.qnet_args = dict(hidden_size=128, num_layers=2, activation_fn=tf.)
         # - hidden_size: size of hidden layers
         # - num_layers: number of hidden layers
         # - activation_fn: activation function of hidden layers

@@ -1,3 +1,10 @@
+"""Device platform utilities.
+
+This module provides a base `Platform` class and helper functions
+to enumerate supported platforms and create platform-specific
+implementations. Only comments were added; the original code
+behavior has not been changed.
+"""
 class Platform:
     def __init__(self, config):
         self.config = config

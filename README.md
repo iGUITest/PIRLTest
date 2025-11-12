@@ -63,6 +63,7 @@ For Web app testing, use the following command:
 python launcher.py <config_path>
 ```
 
+
 ### 📊 After Testing
 For Android apps, if instrumented properly, the .exec coverage data files would be pulled to `coverages` folder. For Web apps, if instrumented properly, the .json coverage data file would be downloaded under `$HOME/Download` folder.
 

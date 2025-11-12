@@ -65,7 +65,8 @@ python launcher.py <config_path>
 
 
 ### 📊 After Testing
-For Android apps, if instrumented properly, the .exec coverage data files would be pulled to `coverages` folder. For Web apps, if instrumented properly, the .json coverage data file would be downloaded under `$HOME/Download` folder.
+For Android apps, if instrumented properly, the .exec coverage data files would be pulled to `coverages` folder. 
+For Web apps, if instrumented properly, the .json coverage data file would be downloaded under `$HOME/Download` folder.
 
 📄 The log of the device side would be under `logs` folder.
 

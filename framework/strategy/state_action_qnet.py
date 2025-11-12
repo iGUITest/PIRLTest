@@ -1,12 +1,12 @@
-from utils.model_mode import ModelMode
 import tensorflow as tf
+from utils.model_mode import ModelMode
 
 
 class StateActionQNet:
-    def __init__(self, 
+    def __init__(self,
                  state_action_size,
-                 hidden_size=512, 
-                 num_layers=4, 
+                 hidden_size=512,
+                 num_layers=4,
                  activation_fn=tf.nn.leaky_relu,
                  mode=ModelMode.train,
                  max_value=5):
@@ -17,7 +17,7 @@ class StateActionQNet:
             with tf.variable_scope(f'hidden_{i}'):
                 hidden_layer = tf.layers.dense(hidden_layer, hidden_size, activation=activation_fn)
         value = tf.layers.dense(hidden_layer, 1, activation=None)
-        #value = tf.sigmoid(raw_value) * max_value
+        # value = tf.sigmoid(raw_value) * max_value
         value = tf.squeeze(value, axis=1)
 
         if mode == ModelMode.train:

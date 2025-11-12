@@ -1,15 +1,15 @@
+import cv2
 import numpy as np
 import tensorflow as tf
-import cv2
-from img_process.app_page import AppPage
-from img_process.pop_up_detection import detect_pop_up
+
 from action_set.action_type import ActionType
 from action_set.actions import gen_actions_embeddings
-from strategy.qnet_wrapper import QNetWrapper
-from strategy.strategy import BoltzmannStrategy
-from replay_memory import ReplayMemory
-from rewards import PageMemory, PageTransitionMemory, generate_reward
+from img_process.app_page import AppPage
+from img_process.pop_up_detection import detect_pop_up
 from logger import logger
+from replay_memory import ReplayMemory
+from rewards import PageMemory, PageTransitionMemory
+from strategy.strategy import BoltzmannStrategy
 
 
 class BackendConfig:
@@ -69,7 +69,7 @@ class BackendLauncher:
         self.last_action = None
         self.strategy = BoltzmannStrategy(
             qnet_wrapper_args=dict(
-                state_action_size=self.config.state_action_size, 
+                state_action_size=self.config.state_action_size,
                 net_args=self.config.qnet_args,
                 lr=self.config.initial_lr,
                 max_grad=self.config.max_grad,
@@ -83,8 +83,8 @@ class BackendLauncher:
             action_type_coefficients=self.config.action_type_coefficients,
             # Args below are not used by BoltzmannStrategy.
             # Uncomment them when using EpsilonGreedyStrategy.
-            #epsilon=self.config.epsilon,
-            #num_warm_ups=self.config.num_warm_ups,
+            # epsilon=self.config.epsilon,
+            # num_warm_ups=self.config.num_warm_ups,
         )
         self.prediction_counter = 0
         self.page_memory = PageMemory()
@@ -126,7 +126,7 @@ class BackendLauncher:
 
         page, page_confidence = self.page_memory.update(page)
         return page, page_confidence
-    
+
     def after_observation(self, screenshot_path):
         page, page_confidence = self._get_current_page(screenshot_path)
         state_embedding = page.embedding
@@ -141,7 +141,7 @@ class BackendLauncher:
             last_action = self.last_action
             self.ptm.update(last_page, last_action, page)
             # compute reward later
-            #reward = generate_reward(last_page, last_action, page, self.ptm)
+            # reward = generate_reward(last_page, last_action, page, self.ptm)
             page_transition = (last_page, last_action, page, page_confidence)
             self.replay_memory.append(self.last_sa, page_transition, state_embedding, action_embeddings)
 
@@ -166,6 +166,7 @@ class BackendLauncher:
         best_action, best_sa_embedding = self.strategy.explore(state_embedding, actions, action_embeddings)
         self.prediction_counter += 1
         return best_action, best_sa_embedding
+
 
 def is_page_still(page_a, page_b, threshold=.95):
     if page_a is None or page_b is None:
@@ -196,4 +197,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

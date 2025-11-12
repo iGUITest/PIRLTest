@@ -1,7 +1,8 @@
-import logging
-import requests
 import json
+import logging
 import os
+
+import requests
 
 
 def crawl_image(url, save_path, max_trial_count=5):
@@ -14,6 +15,7 @@ def crawl_image(url, save_path, max_trial_count=5):
         else:
             logging.debug(f'Request failure: {url}. Status is {r.status_code}.')
     return False
+
 
 def prepare_images(json_path, num_images=10, save_dir='drive/MyDrive/data/images'):
     with open(json_path) as f:

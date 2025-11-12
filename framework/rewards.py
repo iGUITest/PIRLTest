@@ -1,9 +1,8 @@
 import math
+
+from action_set.action_type import ActionType
 from img_process.app_page import AppPage
 from img_process.widget.widget_utils import widget_bbox_match, iou_score
-from img_process.widget.widgets_embedding import classify_widget_type
-from action_set.actions import get_generators
-from action_set.action_type import ActionType
 from logger import logger
 
 
@@ -19,6 +18,7 @@ def _is_same_action(a, b, bbox_threshold=.7):
     if a[0] in ActionType.window_actions():
         return a[1] == b[1]
     raise RuntimeError(f'Action type unrecognized: {a[0]}.')
+
 
 class PageWrapper(AppPage):
     def __init__(self, page):
@@ -58,7 +58,7 @@ class PageWrapper(AppPage):
         self.all_actions.extend(new_actions)
 
     def execute_action(self, action, bbox_threshold=.7):
-        candidates = [i for i, a in enumerate(self.all_actions) 
+        candidates = [i for i, a in enumerate(self.all_actions)
                       if _is_same_action(a, action, bbox_threshold=bbox_threshold)]
         if candidates:
             if action[0] in ActionType.widget_actions():
@@ -118,7 +118,7 @@ class PageTransitionMemory:
         return self.counts[self.memory.index(t)] if t in self.memory else 0
 
 
-def generate_reward(old_page, action, new_page, new_page_confidence, ptm, 
+def generate_reward(old_page, action, new_page, new_page_confidence, ptm,
                     punishment_coefficient=3):
     # Core reward.
     er = new_page.calc_explore_rate()
@@ -138,4 +138,3 @@ def generate_reward(old_page, action, new_page, new_page_confidence, ptm,
         reward = 5 * (1 - math.exp(.5 - punished_reward))
     logger.debug(f'Rewards for this action {str(action)}: {core_reward}, {punished_reward}, {reward}')
     return reward
-

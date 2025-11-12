@@ -1,7 +1,8 @@
 import random
-import os
-import numpy as np
 import sys
+
+import numpy as np
+
 from rewards import generate_reward
 
 
@@ -59,7 +60,7 @@ class ReplayMemory:
         results = recents + rands
         random.shuffle(results)
         return results
-    
+
     def get_train_data(self, qnet_wrapper, pred_kwargs=dict(), n=16, batch_size=4):
         selected_ids = self._select_train_ids(n)
         data = self[selected_ids]
@@ -89,4 +90,3 @@ class ReplayMemory:
             expected_values = np.array(expected_qs[i:(i + batch_size)])
             batches.append((state_actions, expected_values))
         return batches
-

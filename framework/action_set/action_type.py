@@ -20,13 +20,13 @@ class ActionType:
     @staticmethod
     def count():
         return 17
-    
+
     @staticmethod
     def no_arg_actions():
         return [
-            ActionType.scroll, 
-            ActionType.switch_back_front, 
-            ActionType.switch_network, 
+            ActionType.scroll,
+            ActionType.switch_back_front,
+            ActionType.switch_network,
             ActionType.rotate_screen,
             ActionType.split_screen,
             ActionType.grant_permission,
@@ -34,7 +34,7 @@ class ActionType:
             ActionType.interrupt,
             ActionType.back,
         ]
-    
+
     @staticmethod
     def widget_actions():
         return [
@@ -45,7 +45,7 @@ class ActionType:
             ActionType.middle_click,
             ActionType.input,
         ]
-    
+
     @staticmethod
     def window_actions():
         return [

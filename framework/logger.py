@@ -6,6 +6,13 @@ logger = logging.getLogger('pirltest')
 
 
 def init_logger(filepath, mode='a'):
+    """
+    Initialize the logger with both console and file handlers
+    
+    Args:
+        filepath: Path to the log file
+        mode: File mode - 'a' for append, 'w' for overwrite
+    """
     logger.setLevel(logging.DEBUG)
 
     fmt = '%(asctime)s - %(levelname)s - %(name)s - %(module)s - %(message)s'

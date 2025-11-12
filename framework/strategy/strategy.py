@@ -6,16 +6,16 @@ from logger import logger
 
 class EpsilonGreedyStrategy:
     def __init__(self, 
-                 qnet_wrapper_args, 
-                 batch_size=4, 
-                 action_type_coefficients=None,
-                 epsilon=.1,
-                 num_warm_ups=4):
-        self.qnet_wrapper = QNetWrapper(**qnet_wrapper_args)
+                 qnet_wrapper_args,          # 构建 QNetWrapper 所需的参数字典
+                 batch_size=4,               # 神经网络推理时的 batch 大小
+                 action_type_coefficients=None,  # 按 action 类型给分的权重系数（可选）
+                 epsilon=.1,                 # 探索概率
+                 num_warm_ups=4):            # 强制随机探索的“热身”步数
+        self.qnet_wrapper = QNetWrapper(**qnet_wrapper_args)  # 初始化估值网络
         self.batch_size = batch_size
         self.action_type_coefficients = action_type_coefficients
         self.epsilon = epsilon
-        self.warm_up_countdown = num_warm_ups
+        self.warm_up_countdown = num_warm_ups  # 倒计时，>0 时一律随机
     
     def train_qnet(self, train_data, num_epoch=1):
         self.qnet_wrapper.train(train_data, num_epoch=num_epoch, save_every=num_epoch)
